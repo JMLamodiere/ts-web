@@ -1,0 +1,23 @@
+{
+  "name": "ts-web",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.html",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "parcel": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JMLamodiere/ts-web.git"
+  },
+  "author": "Jean-Marie Lamodière",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JMLamodiere/ts-web/issues"
+  },
+  "homepage": "https://github.com/JMLamodiere/ts-web#readme"
+}
