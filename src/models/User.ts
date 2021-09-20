@@ -1,6 +1,8 @@
 import { baseUrl } from "../config";
-import axios, { AxiosResponse } from "axios";
 import { Eventing } from "./Eventing";
+import { Sync } from "./Sync";
+
+const rootUrl = `${baseUrl}/users`;
 
 interface UserProps {
   id?: number;
@@ -10,6 +12,7 @@ interface UserProps {
 
 export class User {
   public readonly events: Eventing = new Eventing();
+  public readonly sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
 
   constructor(private data: UserProps) {}
 
@@ -20,23 +23,5 @@ export class User {
 
   set(update: UserProps): void {
     Object.assign(this.data, update);
-  }
-
-  fetch(): void {
-    axios
-      .get(`${baseUrl}/users/${this.get("id")}`)
-      .then((response: AxiosResponse): void => {
-        this.set(response.data);
-      });
-  }
-
-  save(): void {
-    const id = this.get("id");
-
-    if (id) {
-      axios.put(`${baseUrl}/users/${id}`, this.data);
-    } else {
-      axios.post(`${baseUrl}/users`, this.data);
-    }
   }
 }
