@@ -1,7 +1,9 @@
 import { User } from "./models/User";
-import axios from "axios";
 
-// See npm run start:db
-const baseUrl = "http://localhost:3000";
+const user = new User({ id: 1 });
 
-axios.post(baseUrl + "/users", { name: "Paul", age: 40 });
+user.fetch();
+
+setTimeout(function () {
+  console.log(user);
+}, 4000);
