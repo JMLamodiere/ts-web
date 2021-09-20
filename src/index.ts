@@ -7,3 +7,5 @@ user.events.on("change", () => {
 });
 
 user.events.trigger("change");
+
+console.log(user.get("name"));
