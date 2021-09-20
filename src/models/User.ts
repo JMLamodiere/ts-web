@@ -20,4 +20,8 @@ export class User extends Model<UserProps> {
       new ApiSync(rootUrl)
     );
   }
+
+  isAdminUser(): boolean {
+    return this.get("id") === 1;
+  }
 }
