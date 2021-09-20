@@ -8,3 +8,10 @@ user.events.on("change", () => {
 
 user.set({ name: "new name" });
 console.log(user.get("name"));
+
+const firstUser = new User({ id: 1 });
+firstUser.on("change", () => {
+  console.log(user);
+});
+
+firstUser.fetch();
