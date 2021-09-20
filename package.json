@@ -3,12 +3,15 @@
   "description": "",
   "version": "1.0.0",
   "main": "index.html",
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.21.4"
+  },
   "devDependencies": {
     "typescript": "^4.4.3"
   },
   "scripts": {
-    "parcel": "parcel index.html"
+    "start:db": "json-server -w db.json",
+    "start:parcel": "parcel index.html"
   },
   "repository": {
     "type": "git",
