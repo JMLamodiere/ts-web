@@ -6,7 +6,7 @@ import { ApiSync } from "./ApiSync";
 
 const rootUrl = `${baseUrl}/users`;
 
-interface UserProps {
+export interface UserProps {
   id?: number;
   name?: string;
   age?: number;
