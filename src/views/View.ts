@@ -1,13 +1,21 @@
 import { Model } from "../models/Model";
 
 export abstract class View<T extends Model<K>, K> {
+  protected regions: { [key: string]: Element } = {};
+
   constructor(protected parent: Element, protected model: T) {
     this.bindModel();
   }
 
-  abstract eventsMap(): { [key: string]: () => void };
+  protected abstract template(): string;
 
-  abstract template(): string;
+  protected regionsMap(): { [key: string]: string } {
+    return {};
+  }
+
+  protected eventsMap(): { [key: string]: () => void } {
+    return {};
+  }
 
   private bindModel(): void {
     this.model.on("change", () => {
@@ -15,7 +23,7 @@ export abstract class View<T extends Model<K>, K> {
     });
   }
 
-  bindEvents(fragment: DocumentFragment): void {
+  private bindEvents(fragment: DocumentFragment): void {
     const eventsMap = this.eventsMap();
     for (let eventKey in eventsMap) {
       const [eventName, selector] = eventKey.split(":");
@@ -26,6 +34,21 @@ export abstract class View<T extends Model<K>, K> {
     }
   }
 
+  private mapRegions(fragment: DocumentFragment): void {
+    const regionsMap = this.regionsMap();
+
+    for (let key in regionsMap) {
+      const selector = regionsMap[key];
+      const element = fragment.querySelector(selector);
+
+      if (element) {
+        this.regions[key] = element;
+      }
+    }
+  }
+
+  protected onRender(): void {}
+
   render(): void {
     this.parent.innerHTML = "";
 
@@ -33,6 +56,9 @@ export abstract class View<T extends Model<K>, K> {
     templateElement.innerHTML = this.template();
 
     this.bindEvents(templateElement.content);
+    this.mapRegions(templateElement.content);
+
+    this.onRender();
 
     this.parent.append(templateElement.content);
   }
