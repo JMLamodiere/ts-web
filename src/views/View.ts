@@ -35,16 +35,13 @@ export abstract class View<T extends Model<K>, K> {
   }
 
   private mapRegions(fragment: DocumentFragment): void {
-    const regionsMap = this.regionsMap();
-
-    for (let key in regionsMap) {
-      const selector = regionsMap[key];
+    Object.entries(this.regionsMap()).forEach(([key, selector]) => {
       const element = fragment.querySelector(selector);
 
       if (element) {
         this.regions[key] = element;
       }
-    }
+    });
   }
 
   protected onRender(): void {}
