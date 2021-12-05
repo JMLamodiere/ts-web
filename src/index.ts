@@ -1,15 +1,31 @@
 import { UserEdit } from "./views/UserEdit";
-import { User } from "./models/User";
+import { User, UserProps } from "./models/User";
+import { Collection } from "./models/Collection";
+import { UserList } from "./views/UserList";
 
-const rootElement = document.getElementById("root");
-if (!rootElement) {
-  throw new Error("Element with id root not found");
+const userEditElement = document.getElementById("user-edit");
+if (!userEditElement) {
+  throw new Error("Element with id user-edit not found");
 }
 
 const user = User.buildUser({ name: "NAME", age: 20 });
-
-const userEdit = new UserEdit(rootElement, user);
-
+const userEdit = new UserEdit(userEditElement, user);
 userEdit.render();
 
-console.log(userEdit);
+const users = new Collection(
+  "http://localhost:3000/users",
+  (json: UserProps) => {
+    return User.buildUser(json);
+  }
+);
+
+users.on("change", () => {
+  const collectionElement = document.getElementById("collection");
+  if (!collectionElement) {
+    throw new Error("Element with id collection not found");
+  }
+
+  new UserList(collectionElement, users).render();
+});
+
+users.fetch();
